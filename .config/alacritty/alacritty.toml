@@ -1,5 +1,6 @@
 [font]
-normal={family = "Hack Nerd Font Mono", style = "Regular"}
+# normal={family = "Hack Nerd Font Mono", style = "Regular"}
+normal={family = "Hack", style = "Regular"}
 
 [window]
 opacity=0.7
