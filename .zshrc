@@ -1,3 +1,5 @@
+fastfetch
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -82,7 +84,6 @@ plugins=(git z zsh-autosuggestions zsh-syntax-highlighting )
 
 source $ZSH/oh-my-zsh.sh
 
-fastfetch
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -111,3 +112,6 @@ fastfetch
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+path+=('/home/zam/Projects/Odin')
+export path
