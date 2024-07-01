@@ -1,23 +1,25 @@
 # Programs
-Terminal = Foot
-Browser = Firefox
-Music = Spotify
-DE = Hypr
-Code = nvim
-Notification = Dunst
-GUI File Explorer = Nautilus
-Term File Explorer = yazi
-Games = steam
-Bar = waybar
-Wallpaper = hyprpaper
-Menu = fuzzel
-Config Manager = gnu stow
-Voip = Discord
-Grep = ripgrep
-Images = imv
-Videos = vlc
-Screenshots & editing = swappy
-Shell = ZSH & OhMyZSH
+| Usecase       | Program   |
+| ------------- | --------- |
+| Terminal      | Foot      |
+| Browser       | Firefox   |
+| Music         | Spotify   |
+| DE            | Hyprland  |
+| Code          | Nvim      |
+| Notification  | Dunst     |
+| Term Files    | yazi      |
+| Gui Files     | nautilus  |
+| Games         | steam     | 
+| Bar           | waybar    | 
+| Wallpaper     | Hyprpaper |
+| Menu          | fuzzel    |
+| Conf Manager  | stow      |
+| Voip          | Discord   |
+| Grep          | ripgrep   |
+| Images        | imv       |
+| Videos        | vlc       |
+| Image Editing | swappy    |
+| Shell         | ZSH       |
 
 # Use
 ```
