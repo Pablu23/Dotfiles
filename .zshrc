@@ -114,4 +114,5 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 path+=('/home/zam/Projects/Odin')
+path+=('/home/zam/android-studio/bin')
 export path

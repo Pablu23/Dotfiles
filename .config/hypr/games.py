@@ -3,7 +3,8 @@ games = [
     ("initialclass", "steam_app_.*", "tile", "max"),
     ("all", "ffxiv*", "sf"),
     ("all", "Hollow Knight"),
-    ("all", "HELLDIVERS*")
+    ("all", "HELLDIVERS*"),
+    ("all", "CS", "tile", "max")
 ]
 
 def main():
@@ -41,7 +42,7 @@ def main():
 
         conf += f"""windowrulev2 = fullscreen, {selector}
 windowrulev2 = monitor DP-3, {selector} 
-windowrulev2 = forceinput, {selector}\n
+windowrulev2 = allowsinput, {selector}\n
 """
     f.write(conf)
     f.close()
