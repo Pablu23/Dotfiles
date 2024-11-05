@@ -4,7 +4,8 @@ games = [
     ("all", "ffxiv*", "sf"),
     ("all", "Hollow Knight"),
     ("all", "HELLDIVERS*"),
-    ("all", "CS", "tile", "max")
+    ("all", "CS", "tile", "max"),
+    ("title", "Warhammer 40,000: Darktide", "tile")
 ]
 
 def main():
