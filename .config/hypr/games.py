@@ -5,7 +5,7 @@ games = [
     ("all", "Hollow Knight"),
     ("all", "HELLDIVERS*"),
     ("all", "CS", "tile", "max"),
-    ("title", "Warhammer 40,000: Darktide", "tile")
+    ("title", "Warhammer 40,000: Darktide", "tile", "max")
 ]
 
 def main():
@@ -32,18 +32,18 @@ def main():
         for setting in game[2::]:
             match setting:
                 case "sf":
-                    conf += f"windowrulev2 = stayfocused, {selector}\n"
+                    conf += f"windowrule = stayfocused, {selector}\n"
                 case "tile":
-                    conf += f"windowrulev2 = tile, {selector}\n"
+                    conf += f"windowrule = tile, {selector}\n"
                 case "max":
-                    conf += f"windowrulev2 = maximize, {selector}\n"
+                    conf += f"windowrule = maximize, {selector}\n"
                 case s:
                     print(f"Could not find setting \"{s}\"")
  
 
-        conf += f"""windowrulev2 = fullscreen, {selector}
-windowrulev2 = monitor DP-3, {selector} 
-windowrulev2 = allowsinput, {selector}\n
+        conf += f"""windowrule = fullscreen, {selector}
+windowrule = monitor DP-3, {selector} 
+windowrule = allowsinput, {selector}\n
 """
     f.write(conf)
     f.close()
