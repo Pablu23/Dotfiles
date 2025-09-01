@@ -80,7 +80,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions zsh-syntax-highlighting )
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,9 +113,15 @@ export EDITOR='nvim'
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+eval "$(zoxide init zsh)"
+
 alias hx="helix"
+alias cd="z"
+alias ls="eza --icons=always"
 
 path+=('/home/zam/Projects/Odin')
 path+=('/home/zam/android-studio/bin')
+path+=('/home/zam/webstorm/bin')
 path+=('/home/zam/go/bin')
+path+=('/home/zam/.cache/rebar3/bin')
 export path
