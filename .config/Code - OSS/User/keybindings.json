@@ -29,9 +29,9 @@
         "command": "workbench.action.nextEditor",
     },
     //{
-     //   "key": "ctrl+n",
-      //  "command": "workbench.view.explorer",
-     //   "when": 
+    //   "key": "ctrl+n",
+    //  "command": "workbench.view.explorer",
+    //   "when": 
     //},
     {
         "key": "space e",
@@ -69,8 +69,26 @@
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
     },
     {
+        "key": "enter",
+        "command": "runCommands",
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus",
+        "args": {
+            "commands": [
+                "explorer.openAndPassFocus",
+                "workbench.action.focusActiveEditorGroup",
+                "workbench.action.toggleSidebarVisibility"
+            ]
+        }
+    },
+    {
         "key": "ctrl+t",
-        "command": "workbench.action.focusActiveEditorGroup",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.focusActiveEditorGroup",
+                "workbench.action.terminal.toggleTerminal"
+            ]
+        },
         "when": "terminalFocus"
     },
     {
