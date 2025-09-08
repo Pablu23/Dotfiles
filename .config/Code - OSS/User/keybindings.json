@@ -39,6 +39,11 @@
         "when": "filesExplorerFocus && !inputFocus"
     },
     {
+        "key": "space d d",
+        "command": "workbench.actions.view.toggleProblems",
+        "when": "problemFocus && !inputFocus"
+    },
+    {
         "key": "a",
         "command": "explorer.newFile",
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
@@ -81,6 +86,11 @@
         }
     },
     {
+        "key": "enter",
+        "command": "list.select",
+        "when": "explorerViewletVisible && filesExplorerFocus && explorerResourceIsFolder"
+    },
+    {
         "key": "ctrl+t",
         "command": "runCommands",
         "args": {
@@ -106,4 +116,5 @@
         "command": "selectPrevCodeAction",
         "when": "codeActionMenuVisible"
     }
+    },
 ]

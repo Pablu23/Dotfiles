@@ -6,8 +6,49 @@
     "vim.smartRelativeLine": true,
     "vim.useSystemClipboard": true,
     "vim.highlightedyank.enable": true,
+    "vim.easymotion": true,
+    "vim.hlsearch": true,
     "vim.highlightedyank.color": "#a9dc7660",
     "vim.highlightedyank.duration": 250,
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1
+    },
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<leader>",
+                "w"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "w"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "b"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "b"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "f"
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "2",
+                "s"
+            ]
+        }
+    ],
     "vim.normalModeKeyBindings": [
         {
             "before": [
@@ -54,6 +95,16 @@
             ],
             "commands": [
                 "editor.action.quickFix"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "d",
+                "d"
+            ],
+            "commands": [
+                "workbench.actions.view.toggleProblems"
             ]
         },
         {
@@ -115,6 +166,28 @@
         {
             "before": [
                 "g",
+                "c",
+                "c"
+            ],
+            "commands": [
+                "editor.action.commentLine"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "c",
+                "r"
+            ],
+            "commands": [
+                "editor.action.rename"
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                "g",
                 "c"
             ],
             "commands": [
@@ -122,7 +195,6 @@
             ]
         }
     ],
-    "workbench.colorTheme": "Catppuccin Frappé",
     "git.autofetch": true,
     "[svelte]": {
         "editor.defaultFormatter": "svelte.svelte-vscode"
@@ -147,4 +219,17 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
+    "redhat.telemetry.enabled": false,
+    "telemetry.feedback.enabled": false,
+    "telemetry.editStats.enabled": false,
+    "telemetry.telemetryLevel": "off",
+    "chat.agent.enabled": false,
+    "remote.SSH.experimental.chat": false,
+    "chat.commandCenter.enabled": false,
+    "python.analysis.typeCheckingMode": "standard",
+    "workbench.iconTheme": "catppuccin-latte",
+    "editor.fontFamily": "Hack Nerd Font Mono,Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": false,
+    "catppuccin.italicKeywords": false,
+    "workbench.colorTheme": "Catppuccin Latte",
 }
