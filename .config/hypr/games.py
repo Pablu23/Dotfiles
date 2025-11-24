@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 games = [
     ("all", "Stardew Valley"),
     ("initialclass", "steam_app_.*", "tile", "max"),
@@ -18,7 +20,7 @@ def main():
         name = game[1]
         match game[0]:
             case "initialclass":
-                selector = f"initialclass:({name})"
+                selector = f"initialClass:({name})"
             case "title":
                 selector = f"title:({name})"
             case "class":

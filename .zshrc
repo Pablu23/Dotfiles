@@ -118,6 +118,7 @@ eval "$(zoxide init zsh)"
 alias hx="helix"
 alias cd="z"
 alias ls="eza --icons=always"
+alias vim="nvim"
 
 path+=('/home/zam/Projects/Odin')
 path+=('/home/zam/android-studio/bin')
@@ -125,3 +126,10 @@ path+=('/home/zam/webstorm/bin')
 path+=('/home/zam/go/bin')
 path+=('/home/zam/.cache/rebar3/bin')
 export path
+
+# bun completions
+[ -s "/home/zam/.bun/_bun" ] && source "/home/zam/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -1,5 +1,5 @@
-connect.dial_devices="[{\"address\":\"192.168.2.158\",\"app_state\":\"MISSING\",\"created_timestamp\":1754139785,\"device_id\":\"ff98d289-21ff-14f9-b88a-a1e8ae8d4e6d\",\"dial_location_url\":\"http://192.168.2.158:56790/dd.xml\",\"display_name\":\"55PUS7609/12\",\"last_seen\":1754139844,\"manufacturer\":\"Philips\",\"model_name\":\"PUS7609\",\"product_cap\":\"\",\"public_ip\":\"2003:f0:7f1c:a600:271a:e7a3:aa7d:9873\",\"wol\":{\"all_interfaces\":false,\"delay_ms\":250,\"mac\":\"0ccafb8d3446\",\"port\":9,\"retries\":320}}]"
-audio.play_bitrate_non_metered_migrated=true
 connect.mdns_devices="[]"
+audio.play_bitrate_non_metered_migrated=true
+connect.dial_devices="[{\"address\":\"192.168.2.158\",\"app_state\":\"MISSING\",\"created_timestamp\":1757418852,\"device_id\":\"ff98d289-21ff-14f9-b88a-a1e8ae8d4e6d\",\"dial_location_url\":\"http://192.168.2.158:56790/dd.xml\",\"display_name\":\"55PUS7609/12\",\"last_seen\":1757418972,\"manufacturer\":\"Philips\",\"model_name\":\"PUS7609\",\"product_cap\":\"\",\"public_ip\":\"2003:f0:7f0a:bb00:9fe2:aa0f:3a35:aac7\",\"wol\":{\"all_interfaces\":false,\"delay_ms\":250,\"mac\":\"0ccafb8d3446\",\"port\":9,\"retries\":320}}]"
 ui.track_notifications_enabled=false
 app.player.volume=36836
