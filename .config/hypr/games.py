@@ -2,12 +2,12 @@
 
 games = [
     ("all", "Stardew Valley"),
-    ("initialclass", "steam_app_.*", "tile", "max"),
+    ("ic", "steam_app_.*", "tile", "max"),
     ("all", "ffxiv*", "sf"),
     ("all", "Hollow Knight"),
     ("all", "HELLDIVERS*"),
     ("all", "CS", "tile", "max"),
-    ("title", "Warhammer 40,000: Darktide", "tile", "max")
+    ("title", "Warhammer 40.000: Darktide", "tile", "max")
 ]
 
 def main():
@@ -19,14 +19,14 @@ def main():
 
         name = game[1]
         match game[0]:
-            case "initialclass":
-                selector = f"initialClass:({name})"
+            case "ic":
+                selector = f"match:initial_class \"{name}\""
             case "title":
-                selector = f"title:({name})"
+                selector = f"match:title \"{name}\""
             case "class":
-                selector = f"class:({name})"
+                selector = f"match:class \"{name}\""
             case "all":
-                selector = f"title:({name}), class:({name})"
+                selector = f"match:title \"{name}\", match:class \"{name}\""
             case s:
                 print(f"Could not find selector for \"{s}\"")
                 continue
@@ -34,18 +34,18 @@ def main():
         for setting in game[2::]:
             match setting:
                 case "sf":
-                    conf += f"windowrule = stayfocused, {selector}\n"
+                    conf += f"windowrule = stay_focused on, {selector}\n"
                 case "tile":
-                    conf += f"windowrule = tile, {selector}\n"
+                    conf += f"windowrule = tile on, {selector}\n"
                 case "max":
-                    conf += f"windowrule = maximize, {selector}\n"
+                    conf += f"windowrule = maximize on, {selector}\n"
                 case s:
                     print(f"Could not find setting \"{s}\"")
  
 
-        conf += f"""windowrule = fullscreen, {selector}
+        conf += f"""windowrule = fullscreen on, {selector}
 windowrule = monitor DP-3, {selector} 
-windowrule = allowsinput, {selector}\n
+windowrule = allows_input on, {selector}\n
 """
     f.write(conf)
     f.close()
