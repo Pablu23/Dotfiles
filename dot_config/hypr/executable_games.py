@@ -1,0 +1,56 @@
+#!/usr/bin/python3
+
+games = [
+    ("all", "Stardew Valley"),
+    ("ic", "steam_app_.*", "tile", "max"),
+    ("all", "ffxiv*", "sf"),
+    ("all", "Hollow Knight"),
+    ("all", "HELLDIVERS*"),
+    ("all", "CS", "tile", "max"),
+    ("title", "Warhammer 40.000: Darktide", "tile", "max")
+]
+
+def main():
+    f = open("config/games.conf", "w")
+    conf: str = "# Auto generated window rules for Games\n\n"
+    for game in games:
+        if type(game) is not tuple:
+            continue
+
+        name = game[1]
+        match game[0]:
+            case "ic":
+                selector = f"match:initial_class \"{name}\""
+            case "title":
+                selector = f"match:title \"{name}\""
+            case "class":
+                selector = f"match:class \"{name}\""
+            case "all":
+                selector = f"match:title \"{name}\", match:class \"{name}\""
+            case s:
+                print(f"Could not find selector for \"{s}\"")
+                continue
+
+        for setting in game[2::]:
+            match setting:
+                case "sf":
+                    conf += f"windowrule = stay_focused on, {selector}\n"
+                case "tile":
+                    conf += f"windowrule = tile on, {selector}\n"
+                case "max":
+                    conf += f"windowrule = maximize on, {selector}\n"
+                case s:
+                    print(f"Could not find setting \"{s}\"")
+ 
+
+        conf += f"""windowrule = fullscreen on, {selector}
+windowrule = monitor DP-3, {selector} 
+windowrule = allows_input on, {selector}\n
+"""
+    f.write(conf)
+    f.close()
+
+
+if __name__ == "__main__":
+    main()
+  
