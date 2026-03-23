@@ -35,6 +35,7 @@ function copy
     end
 end
 
+set -U fish_complete_path $fish_complete_path /nix/var/nix/profiles/default/share/fish/vendor_completions.d
 set -Ux EDITOR nvim
 set -U fish_history_max 1000
 
@@ -45,5 +46,6 @@ alias untar='tar -zxvf '
 alias grep='grep --color=auto'
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 
+direnv hook fish | source
 zoxide init fish | source
 starship init fish | source

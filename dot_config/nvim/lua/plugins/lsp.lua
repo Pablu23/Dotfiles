@@ -15,6 +15,7 @@ return {
       "rust_analyzer",
       "templ",
       "tailwindcss",
+      "nil_ls"
     })
 
 
