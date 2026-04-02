@@ -1,7 +1,13 @@
 # source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 function fish_greeting
+  {{- if eq .chezmoi.hostname "ubuntu" }}
+    if test -z "$TMUX"
+        tmux new -As default
+    end
+  {{- else }}
    fastfetch
+  {{- end }}
 end
 
 # Add ~/.local/bin to PATH
@@ -39,6 +45,10 @@ set -U fish_complete_path $fish_complete_path /nix/var/nix/profiles/default/shar
 set -Ux EDITOR nvim
 set -U fish_history_max 1000
 
+{{ if eq .chezmoi.hostname "ubuntu" }}
+    fish_add_path /opt/nvim-linux-x86_64/bin
+{{ end }}
+
 alias vim='nvim'
 alias cd='z'
 alias ls='eza --icons=always --color=always'
@@ -46,6 +56,7 @@ alias untar='tar -zxvf '
 alias grep='grep --color=auto'
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 
+chezmoi completion fish | source
 direnv hook fish | source
 zoxide init fish | source
 starship init fish | source
