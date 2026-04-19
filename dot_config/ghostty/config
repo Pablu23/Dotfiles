@@ -3,7 +3,12 @@ font-feature=-calt
 font-feature=-liga
 font-feature=-dlig
 
-shell-integration-features = ssh-terminfo,ssh-env
+font-family = Hack Nerd Font Mono
+
+background-opacity=0.75
+background-blur=true
+
+# shell-integration-features = ssh-terminfo,ssh-env
 
 keybind = cmd+t=unbind
 keybind = cmd+n=unbind
