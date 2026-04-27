@@ -11,7 +11,10 @@ return {
   config = function()
     require("neotest").setup({
       adapters = {
-        require("neotest-python"),
+        require("neotest-python")({
+          python = vim.fn.exepath("python"),
+          runner = "pytest",
+        }),
         require("neotest-go")
       },
       diagnostic = {

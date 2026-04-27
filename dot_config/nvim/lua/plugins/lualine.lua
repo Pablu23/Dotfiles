@@ -4,8 +4,18 @@ return {
   config = function()
     require('lualine').setup({
       options = {
-        theme = 'dracula'
+        theme = 'catppuccin'
+      },
+      sections = {
+      lualine_x = {
+        function()
+          return require('direnv').statusline()
+        end,
+        'encoding',
+        'fileformat',
+        'filetype',
       }
+    }
     })
   end
 }

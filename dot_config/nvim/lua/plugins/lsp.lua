@@ -15,13 +15,18 @@ return {
       "rust_analyzer",
       "templ",
       "tailwindcss",
-      "nil_ls"
+      "nil_ls",
+      "gleam",
+      "ty"
     })
 
 
     -- Testing basedpyright atm, change to jedi idk
     vim.lsp.config("basedpyright", {
       settings = {
+        python = {
+          pythonPath = vim.fn.exepath("python"),
+        },
         ['basedpyright'] = {
           analysis = {
             typeCheckingMode = "basic",
