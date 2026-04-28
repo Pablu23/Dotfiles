@@ -16,7 +16,12 @@ window#waybar {
   color: #6c7086;
 }
 
+#workspaces button.visible {
+  color: #cdd6f4;
+}
+
 #workspaces button.active {
+  background: #313244;
   color: #89b4fa;
 }
 
@@ -28,7 +33,7 @@ window#waybar {
   color: #a6adc8;
 }
 
-#cpu, #memory, #network, #pulseaudio, #clock {
+#cpu, #memory, #network, #pulseaudio, #clock, #tray {
   padding: 0 10px;
 }
 

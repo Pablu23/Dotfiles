@@ -6,9 +6,10 @@ font-feature=-dlig
 font-family = Hack Nerd Font Mono
 
 background-opacity=0.75
+background-opacity-cells = true
 background-blur=true
 
-# shell-integration-features = ssh-terminfo,ssh-env
+shell-integration-features = ssh-terminfo,ssh-env
 
 keybind = cmd+t=unbind
 keybind = cmd+n=unbind
@@ -22,3 +23,11 @@ keybind = alt+left=unbind
 keybind = alt+right=unbind
 
 keybind = ctrl+v=paste_from_clipboard
+
+window-padding-x = 0
+window-padding-y = 0
+window-padding-balance = true
+window-padding-color = extend-always
+window-vsync = false
+
+shell-integration = zsh
