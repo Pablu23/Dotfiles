@@ -6,7 +6,7 @@ return {
     conform.setup {
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "isort", "black", lsp_format = "fallback" },
+        python = { "isort", "black", "ruff", lsp_format = "fallback" },
         gotmpl = { "djlint" }
       },
       format_on_save = {
