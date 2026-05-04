@@ -35,10 +35,7 @@ export PATH
 {{ end }}
 
 source <(chezmoi completion zsh)
-type starship_zle-keymap-select >/dev/null || \
-  {
-    eval "$(starship init zsh)"
-  }
+eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 {{ if eq .chezmoi.hostname "gentoo" }}
