@@ -34,11 +34,6 @@ PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
 {{ end }}
 
-
-source <(kubectl completion zsh)
-source <(kubebuilder completion zsh)
-source <(chezmoi completion zsh)
-
 type starship_zle-keymap-select >/dev/null || \
   {
     eval "$(starship init zsh)"
