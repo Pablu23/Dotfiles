@@ -30,10 +30,10 @@ alias cd='z'
 alias ls='eza --icons=always'
 
 {{ if eq .chezmoi.os "darwin" }}
-path="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH
 {{ end }}
 
-export path
 
 source <(kubectl completion zsh)
 source <(kubebuilder completion zsh)
