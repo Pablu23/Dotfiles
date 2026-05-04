@@ -1,0 +1,8 @@
+README.md
+{{- if ne .chezmoi.hostname "gentoo" }}
+.wallpaper
+.config/dunst
+.config/fuzzel
+.config/hypr
+.config/waybar
+{{ end }}
