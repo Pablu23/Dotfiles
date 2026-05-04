@@ -32,8 +32,9 @@ alias ls='eza --icons=always'
 {{ if eq .chezmoi.os "darwin" }}
 PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
-{{ end }}
+{{ end }}
 
+source <(chezmoi completion zsh)
 type starship_zle-keymap-select >/dev/null || \
   {
     eval "$(starship init zsh)"
@@ -50,6 +51,8 @@ source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source <(kubectl completion zsh)
+source <(kubebuilder completion zsh)
 
 {{ end }}
 
