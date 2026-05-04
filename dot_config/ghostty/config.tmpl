@@ -3,11 +3,13 @@ font-feature=-calt
 font-feature=-liga
 font-feature=-dlig
 
+{{ if .chezmoi.hostname "gentoo" }}
 font-family = Hack Nerd Font Mono
 
 background-opacity=0.75
 background-opacity-cells = true
 background-blur=true
+{{ end }}
 
 shell-integration-features = ssh-terminfo,ssh-env
 
@@ -24,6 +26,8 @@ keybind = alt+right=unbind
 
 keybind = ctrl+v=paste_from_clipboard
 
+confirm-paste = false
+
 window-padding-x = 0
 window-padding-y = 0
 window-padding-balance = true
@@ -31,3 +35,8 @@ window-padding-color = extend-always
 window-vsync = false
 
 shell-integration = zsh
+
+{{ if .chezmoi.os "darwin" }}
+macos-option-as-alt = left
+macos-titlebar-style = transparent
+{{ end }}
