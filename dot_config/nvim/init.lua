@@ -98,7 +98,138 @@ vim.keymap.set("n", "<leader>dq", function()
 end, { nowait = true, remap = false, desc = "Debug close" })
 vim.keymap.set("n", "<leader>dl", dap.list_breakpoints, { nowait = true, remap = false, desc = "Debug list breakpoints" })
 
+local function read_pyproject()
+  local results = vim.fs.find("pyproject.toml", { upward = true, stop = vim.loop.os_homedir() })
+  local path = results[1]
+  if not path then
+    return nil
+  end
 
+  local ok, lines = pcall(vim.fn.readfile, path)
+  if not ok then
+    return nil
+  end
+
+  return table.concat(lines, "\n")
+end
+
+local function get_scripts_from_pyproject()
+  local pyproject = read_pyproject()
+  if not pyproject then
+    return {}
+  end
+
+  local scripts = {}
+
+  -- Match [tool.poetry.scripts]
+  for script_line in pyproject:gmatch("%[tool%.poetry%.scripts%][^\n]*\n([^%[]*)") do
+    for name, module in script_line:gmatch('([%w_%-]+)%s*=%s*"([^"]+)"') do
+      scripts[name] = module
+    end
+  end
+
+  -- Match [project.scripts]
+  for script_line in pyproject:gmatch("%[project%.scripts%][^\n]*\n([^%[]*)") do
+    for name, module in script_line:gmatch('([%w_%-]+)%s*=%s*"([^"]+)"') do
+      scripts[name] = module
+    end
+  end
+
+  return scripts
+end
+
+local function get_python_path()
+  local cwd = vim.fn.getcwd()
+  if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
+    return cwd .. "/venv/bin/python"
+  elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+    return cwd .. "/.venv/bin/python"
+  else
+    return vim.fn.exepath("python")
+  end
+end
+
+-- Store last used parameters for quick reuse
+local last_params = {}
+
+vim.keymap.set("n", "<leader>dps", function()
+  local scripts = get_scripts_from_pyproject()
+
+  if vim.tbl_isempty(scripts) then
+    vim.notify("No scripts found in pyproject.toml", vim.log.levels.WARN)
+    return
+  end
+
+  local script_names = vim.tbl_keys(scripts)
+  table.sort(script_names)
+
+  local function start_debug(script_name, module, args_str)
+    local package = module:match("^([^:]+)")
+    
+    -- Parse arguments string into table
+    local args = {}
+    if args_str and args_str ~= "" then
+      for arg in args_str:gmatch("%S+") do
+        table.insert(args, arg)
+      end
+    end
+
+    -- Store for quick reuse
+    last_params[script_name] = args_str or ""
+
+    vim.notify(
+      "Debugging: " .. script_name .. (args_str and (" with args: " .. args_str) or ""),
+      vim.log.levels.INFO
+    )
+
+    local dap = require("dap")
+    dap.configurations.python = {
+      {
+        type = "python",
+        request = "launch",
+        name = "Debug: " .. script_name,
+        module = package,
+        args = args,
+        pythonPath = get_python_path(),
+        justMyCode = false,
+        console = "integratedTerminal",
+      },
+    }
+    dap.continue()
+  end
+
+  local function show_param_input(script_name, module)
+    -- Show input dialog for parameters
+    vim.ui.input({
+      prompt = "Arguments for " .. script_name .. ": ",
+      default = last_params[script_name] or "",
+      completion = "file",
+    }, function(args_str)
+      if args_str ~= nil then  -- nil = cancelled, "" = empty input is OK
+        start_debug(script_name, module, args_str)
+      end
+    end)
+  end
+
+  local function select_script()
+    if #script_names == 1 then
+      show_param_input(script_names[1], scripts[script_names[1]])
+    else
+      vim.ui.select(script_names, {
+        prompt = "Select script to debug: ",
+        format_item = function(item)
+          return item .. " → " .. scripts[item]
+        end,
+      }, function(selected)
+        if selected then
+          show_param_input(selected, scripts[selected])
+        end
+      end)
+    end
+  end
+
+  select_script()
+end, { desc = "Debug Python script from pyproject.toml" })
 -- Lsp Config
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show hover information" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto definition" })
