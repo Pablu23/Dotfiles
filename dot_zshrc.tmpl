@@ -29,19 +29,32 @@ alias vim='nvim'
 alias cd='z'
 alias ls='eza --icons=always'
 
+{{ if eq .chezmoi.os "darwin" }}
+path="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+{{ end }}
+
 export path
 
-{{ if eq .chezmoi.hostname "gentoo" }}
+source <(kubectl completion zsh)
+source <(kubebuilder completion zsh)
+source <(chezmoi completion zsh)
+
 type starship_zle-keymap-select >/dev/null || \
   {
     eval "$(starship init zsh)"
   }
 eval "$(zoxide init zsh)"
-eval "$(direnv hook zsh)"
 
+{{ if eq .chezmoi.hostname "gentoo" }}
+
+eval "$(direnv hook zsh)"
 source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
 source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+
 {{ else if eq .chezmoi.os "darwin" }}
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 {{ end }}
 
