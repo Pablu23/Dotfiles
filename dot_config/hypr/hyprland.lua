@@ -1,0 +1,6 @@
+require("config.constants")
+require("config.env")
+require("config.autostart")
+require("config.binds")
+require("config.general")
+require("config.rules")
