@@ -12,7 +12,6 @@ hl.monitor({
   position = "auto-left",
   scale = "auto",
   transform = 1
-
 })
 
 -- backup monitor
