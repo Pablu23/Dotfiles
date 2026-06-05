@@ -40,8 +40,20 @@ hl.window_rule({
   name = "steam_notifications",
   match = {
     class = "^(steam)$",
-    title = "^(notificationtoasts_*)$"
+    title = "^(notificationtoasts_.*)$"
   },
   no_focus = true,
   no_initial_focus = true
+})
+
+hl.window_rule({
+  name = "discord",
+  match = {
+    class = "discord"
+  },
+  monitor = SECONDARY_DISPLAY,
+  workspace = "6 silent",
+  no_initial_focus = true,
+  focus_on_activate = false,
+  suppress_event = "activatefocus"
 })
