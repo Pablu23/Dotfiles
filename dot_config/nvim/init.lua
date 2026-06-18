@@ -38,10 +38,29 @@ vim.keymap.set("n", "<leader>-", function()
   vim.cmd.new()
 end, { desc = "Pane split down" })
 
--- vim.api.nvim_set_keymap('n', '<c-k>', ':wincmd k<CR>', { noremap = true, silent = true, desc = "Move to up windows" });
--- vim.api.nvim_set_keymap('n', '<c-h>', ':wincmd h<CR>', { noremap = true, silent = true, desc = "Move to left windows" });
--- vim.api.nvim_set_keymap('n', '<c-j>', ':wincmd j<CR>', { noremap = true, silent = true, desc = "Move to down windows" });
--- vim.api.nvim_set_keymap('n', '<c-l>', ':wincmd l<CR>', { noremap = true, silent = true, desc = "Move to right windows" });
+local function smart_move(direction, vim_cmd)
+  return function()
+    local before = vim.api.nvim_get_current_win()
+
+    vim.cmd("wincmd " .. vim_cmd)
+
+    if before == vim.api.nvim_get_current_win() then
+      vim.system({
+        "hyprctl",
+        "dispatch",
+        string.format(
+          "hl.dsp.focus({direction = '%s' })",
+          direction
+        )
+      })
+    end
+  end
+end
+
+vim.keymap.set('n', '<D-h>', smart_move("left", "h"), { noremap = true, silent = false, desc = "Move to left windows" });
+vim.keymap.set('n', '<D-l>', smart_move("right", "l"), { noremap = true, silent = false, desc = "Move to right windows" });
+vim.keymap.set('n', '<D-j>', smart_move("down", "j"), { noremap = true, silent = false, desc = "Move to down window" });
+vim.keymap.set('n', '<D-k>', smart_move("up", "k"), { noremap = true, silent = false, desc = "Move to up window" });
 
 vim.api.nvim_set_keymap('n', 'gb', ':bnext<CR>', { noremap = true, silent = true, desc = "Go back last buffer" });
 
@@ -165,7 +184,7 @@ vim.keymap.set("n", "<leader>dps", function()
 
   local function start_debug(script_name, module, args_str)
     local package = module:match("^([^:]+)")
-    
+
     -- Parse arguments string into table
     local args = {}
     if args_str and args_str ~= "" then
@@ -205,7 +224,7 @@ vim.keymap.set("n", "<leader>dps", function()
       default = last_params[script_name] or "",
       completion = "file",
     }, function(args_str)
-      if args_str ~= nil then  -- nil = cancelled, "" = empty input is OK
+      if args_str ~= nil then -- nil = cancelled, "" = empty input is OK
         start_debug(script_name, module, args_str)
       end
     end)

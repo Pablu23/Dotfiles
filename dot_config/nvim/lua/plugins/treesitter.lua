@@ -5,6 +5,6 @@ return {
   build = ":TSUpdate",
   config = function()
     local treesitter = require("nvim-treesitter")
-    treesitter.install({ "python", "go", "zig", "markdown", "json", "yaml", "javascript", "typescript", "bash", "python" })
+    treesitter.install({ "python", "go", "zig", "markdown", "json", "yaml", "javascript", "typescript", "bash", "python", "lua" })
   end
 }

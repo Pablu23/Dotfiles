@@ -14,11 +14,48 @@ hl.bind(mainMod .. " + S",
   hl.dsp.exec_cmd("grim -o" .. MAIN_DISPLAY .. " \"${HOME}/screenshots/screenshot-$(date +%F-%T).png\""))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
 
--- Movement Keys
-hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
-hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
+local synth = {
+  left = false,
+  right = false,
+  up = false,
+  down = false,
+}
+
+local function smart_nav(direction)
+  return function()
+    if synth[direction] then
+      return
+    end
+
+    local win = hl.get_active_window()
+
+    if not win or win.class ~= "com.mitchellh.ghostty" or win.title ~= "vim" then
+      hl.dispatch(hl.dsp.focus({ direction = direction }))
+      return
+    end
+
+    hl.dispatch(hl.dsp.pass({ window = "activewindow" }))
+    synth[direction] = true
+  end
+end
+
+local function smart_nav_release(direction)
+  return function()
+    synth[direction] = false
+  end
+end
+
+local movement_keys = {
+  H = "left",
+  L = "right",
+  J = "down",
+  K = "up"
+}
+
+for key, dir in pairs(movement_keys) do
+  hl.bind(mainMod .. " + " .. key, smart_nav(dir))
+  hl.bind(mainMod .. " + " .. key, smart_nav_release(dir), { release = true })
+end
 
 hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
@@ -38,6 +75,7 @@ end
 
 -- Resize Keys
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
+hl.bind(mainMod .. " + v", hl.dsp.window.float())
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
@@ -51,4 +89,4 @@ hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tru
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-hl.bind("code:51", hl.dsp.pass({ window = "class:^([Dd]iscord)$" }), { non_consuming = true })
+-- hl.bind("code:51", hl.dsp.pass({ window = "class:^([Dd]iscord)$" }), { non_consuming = true })
