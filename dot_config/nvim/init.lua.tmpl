@@ -38,6 +38,8 @@ vim.keymap.set("n", "<leader>-", function()
   vim.cmd.new()
 end, { desc = "Pane split down" })
 
+-- Movement
+{{ if eq .chezmoi.hostname "gentoo" }}
 local function smart_move(direction, vim_cmd)
   return function()
     local before = vim.api.nvim_get_current_win()
@@ -62,26 +64,30 @@ vim.keymap.set('n', '<D-l>', smart_move("right", "l"), { noremap = true, silent 
 vim.keymap.set('n', '<D-j>', smart_move("down", "j"), { noremap = true, silent = false, desc = "Move to down window" });
 vim.keymap.set('n', '<D-k>', smart_move("up", "k"), { noremap = true, silent = false, desc = "Move to up window" });
 
+{{ end }}
+
 vim.api.nvim_set_keymap('n', 'gb', ':bnext<CR>', { noremap = true, silent = true, desc = "Go back last buffer" });
 
 vim.api.nvim_set_keymap('t', '<c-[><c-[>', '<C-\\><C-n>', { noremap = true, silent = true, desc = "Escape Terminal" });
 vim.api.nvim_create_autocmd('TermOpen', {
   group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
   callback = function()
-    vim.opt.number = false
-    vim.opt.relativenumber = false
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
   end,
 });
 
 
 -- Telescope
-local builtin = require("telescope.builtin")
-vim.keymap.set('n', '<leader>fg', function() builtin.live_grep({ glob_pattern = "!*_templ.go" }) end,
+vim.keymap.set('n', '<leader>fg', function() require("telescope.builtin").live_grep({ glob_pattern = "!*_templ.go" }) end,
   { desc = "Telescope live grep" })
-vim.keymap.set('n', 'gl', builtin.lsp_references, { desc = "Telescope show references" })
-vim.keymap.set('n', '<leader>fx', builtin.diagnostics, { desc = "Telescope open diagnostics" })
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Telescope open buffers" })
+vim.keymap.set('n', 'gl', function() require("telescope.builtin").lsp_references() end,
+  { desc = "Telescope show references" })
+vim.keymap.set('n', '<leader>fx', function() require("telescope.builtin").diagnostics() end,
+  { desc = "Telescope open diagnostics" })
+vim.keymap.set('n', '<leader>ff', function() require("telescope.builtin").find_files() end,
+  { desc = "Telescope find files" })
+vim.keymap.set('n', '<leader>fb', function() require("telescope.builtin").buffers() end, { desc = "Telescope open buffers" })
 
 -- Formating
 vim.keymap.set("n", "<leader>gf", function()
@@ -92,30 +98,34 @@ end, { desc = "Format buffer" })
 vim.keymap.set("n", "<leader>e", ":Oil<CR>", { desc = "Open file explorer: OIL" })
 
 -- Neotest
-local neotest = require("neotest")
 vim.keymap.set("n", "<leader>ts", function()
-  neotest.summary.toggle()
+  require("neotest").summary.toggle()
 end, { desc = "Neotest open summary" })
-vim.keymap.set("n", "<leader>to", neotest.output.open, { desc = "Neotest open output" })
-vim.keymap.set("n", "<leader>td", function() neotest.run.run({ suite = false, strategy = "dap" }) end,
+vim.keymap.set("n", "<leader>to", function() require("neotest").output.open() end, { desc = "Neotest open output" })
+vim.keymap.set("n", "<leader>td", function() require("neotest").run.run({ suite = false, strategy = "dap" }) end,
   { desc = "Neotest debug closest test" })
-vim.keymap.set("n", "<leader>tr", function() neotest.run.run({ suite = false }) end,
+vim.keymap.set("n", "<leader>tr", function() require("neotest").run.run({ suite = false }) end,
   { desc = "Neotest run closest test" })
 
 -- Debugging
-local dap = require("dap")
-vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint,
+vim.keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end,
   { nowait = true, remap = false, desc = "Debug toggle breakpoint" })
-vim.keymap.set("n", "<leader>dc", dap.continue, { nowait = true, remap = false, desc = "Debug continue" })
-vim.keymap.set("n", "<leader>di", dap.step_into, { nowait = true, remap = false, desc = "Debug step into" })
-vim.keymap.set("n", "<leader>do", dap.step_over, { nowait = true, remap = false, desc = "Debug step over" })
-vim.keymap.set("n", "<leader>dr", dap.repl.open, { nowait = true, remap = false, desc = "Debug open repl" })
+vim.keymap.set("n", "<leader>dc", function() require("dap").continue() end,
+  { nowait = true, remap = false, desc = "Debug continue" })
+vim.keymap.set("n", "<leader>di", function() require("dap").step_into() end,
+  { nowait = true, remap = false, desc = "Debug step into" })
+vim.keymap.set("n", "<leader>do", function() require("dap").step_over() end,
+  { nowait = true, remap = false, desc = "Debug step over" })
+vim.keymap.set("n", "<leader>dr", function() require("dap").repl.open() end,
+  { nowait = true, remap = false, desc = "Debug open repl" })
 vim.keymap.set("n", "<leader>dq", function()
+  local dap = require("dap")
   dap.terminate()
   require("dapui").close()
   require("nvim-dap-virtual-text").toggle()
 end, { nowait = true, remap = false, desc = "Debug close" })
-vim.keymap.set("n", "<leader>dl", dap.list_breakpoints, { nowait = true, remap = false, desc = "Debug list breakpoints" })
+vim.keymap.set("n", "<leader>dl", function() require("dap").list_breakpoints() end,
+  { nowait = true, remap = false, desc = "Debug list breakpoints" })
 
 local function read_pyproject()
   local results = vim.fs.find("pyproject.toml", { upward = true, stop = vim.loop.os_homedir() })
@@ -201,20 +211,16 @@ vim.keymap.set("n", "<leader>dps", function()
       vim.log.levels.INFO
     )
 
-    local dap = require("dap")
-    dap.configurations.python = {
-      {
-        type = "python",
-        request = "launch",
-        name = "Debug: " .. script_name,
-        module = package,
-        args = args,
-        pythonPath = get_python_path(),
-        justMyCode = false,
-        console = "integratedTerminal",
-      },
-    }
-    dap.continue()
+    require("dap").run({
+      type = "python",
+      request = "launch",
+      name = "Debug: " .. script_name,
+      module = package,
+      args = args,
+      pythonPath = get_python_path(),
+      justMyCode = false,
+      console = "integratedTerminal",
+    })
   end
 
   local function show_param_input(script_name, module)
@@ -258,3 +264,24 @@ vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "LSP rename" })
 -- Motions
 vim.keymap.set("n", "<C-d>", "<C-d>zz", {})
 vim.keymap.set("n", "<C-u>", "<C-u>zz", {})
+
+-- Disable unused
+for _, key in ipairs({
+  "Q",
+  "q:",
+  "q/",
+  "q?",
+  "ZZ",
+  "ZQ",
+  "<C-z>",
+  "U",
+  "gQ",
+  "<Up>",
+  "<Down>",
+  "<Left>",
+  "<Right>",
+  "<S-Down>",
+  "<S-Up>"
+}) do
+  vim.keymap.set("n", key, "<Nop>")
+end

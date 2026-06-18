@@ -1,3 +1,4 @@
+{{ if ne .chezmoi.hostname "gentoo" }}
 return {
   'alexghergh/nvim-tmux-navigation',
   config = function()
@@ -13,3 +14,6 @@ return {
     }
   end
 }
+{{ else }}
+return {}
+{{ end }}

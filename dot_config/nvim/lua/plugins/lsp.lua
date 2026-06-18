@@ -7,7 +7,7 @@ return {
       "gopls",
       "html",
       "yamlls",
-      "svelte-language-server",
+      "svelte",
       "clangd",
       "ansiblels",
       "vtsls",
