@@ -43,17 +43,19 @@ hl.window_rule({
     title = "^(notificationtoasts_.*)$"
   },
   no_focus = true,
-  no_initial_focus = true
+  no_initial_focus = true,
+  focus_on_activate = false,
+  suppress_event = "activate activatefocus"
 })
 
 hl.window_rule({
   name = "discord",
   match = {
-    class = "discord"
+    class = "[dD]iscord"
   },
   monitor = SECONDARY_DISPLAY,
   workspace = "6 silent",
   no_initial_focus = true,
   focus_on_activate = false,
-  suppress_event = "activatefocus"
+  suppress_event = "active activatefocus"
 })

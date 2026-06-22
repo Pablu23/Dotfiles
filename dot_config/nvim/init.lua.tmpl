@@ -59,10 +59,10 @@ local function smart_move(direction, vim_cmd)
   end
 end
 
-vim.keymap.set('n', '<D-h>', smart_move("left", "h"), { noremap = true, silent = false, desc = "Move to left windows" });
-vim.keymap.set('n', '<D-l>', smart_move("right", "l"), { noremap = true, silent = false, desc = "Move to right windows" });
-vim.keymap.set('n', '<D-j>', smart_move("down", "j"), { noremap = true, silent = false, desc = "Move to down window" });
-vim.keymap.set('n', '<D-k>', smart_move("up", "k"), { noremap = true, silent = false, desc = "Move to up window" });
+vim.keymap.set({ 'n', 'i', 'v' }, '<D-h>', smart_move("left", "h"), { noremap = true, silent = false, desc = "Move to left windows" });
+vim.keymap.set({ 'n', 'i', 'v' }, '<D-l>', smart_move("right", "l"), { noremap = true, silent = false, desc = "Move to right windows" });
+vim.keymap.set({ 'n', 'i', 'v' }, '<D-j>', smart_move("down", "j"), { noremap = true, silent = false, desc = "Move to down window" });
+vim.keymap.set({ 'n', 'i', 'v' }, '<D-k>', smart_move("up", "k"), { noremap = true, silent = false, desc = "Move to up window" });
 
 {{ end }}
 

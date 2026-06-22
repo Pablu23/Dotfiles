@@ -60,7 +60,9 @@ hl.config({
   },
 
   cursor = {
-    no_hardware_cursors = 1
+    no_hardware_cursors = 1,
+    no_warps = true,
+    hide_on_key_press = true
   }
 })
 
@@ -114,9 +116,11 @@ hl.config({
   input = {
     kb_layout = "de",
     kb_variant = "nodeadkeys",
+
     follow_mouse = 1,
-    sensitivity = 0.2,
-    force_no_accel = 1,
+    sensitivity = 0,
+    -- force_no_accel = 1,
+    accel_profile = "flat",
   }
 })
 

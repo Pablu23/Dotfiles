@@ -6,7 +6,21 @@ return
   lazy = false,
   config = function()
     require("catppuccin").setup({
-      transparent_background = true,
+      transparent_background = false,
+
+      custom_highlights = function(colors)
+        return {
+          Normal = { bg = colors.base },
+          NormalNC = { bg = colors.mantle },
+
+          WinSeparator = { fg = colors.surface1, bg = colors.mantle },
+
+          StatusLine = { fg = colors.text, bg = colors.surface0 },
+          StatusLineNC = { fg = colors.overlay0, bg = colors.mantle },
+
+          CursorLine = { bg = colors.surface0 },
+        }
+      end
     })
 
     vim.cmd.colorscheme "catppuccin"
