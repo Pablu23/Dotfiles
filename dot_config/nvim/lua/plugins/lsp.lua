@@ -15,7 +15,6 @@ return {
       "glsl_analyzer",
       "rust_analyzer",
       "templ",
-      "tailwindcss",
       "nil_ls",
       "gleam",
       "ty"
