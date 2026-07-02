@@ -1,0 +1,50 @@
+model = "gpt-5.5"
+
+approval_request = "untrusted"
+sandbox_mode = "read-only"
+model_reasoning_effort = "high"
+model_verbosity = "low"
+web_search = "cached"
+allow_login_shell = false
+
+[shell_environment_policy]
+inherit = "core"
+
+[features]
+hooks = false
+multi_agent = false
+# shell_snapshot = false
+# shell_tool = false
+memories = true
+
+[projects."/home/pablu/projects/zw"]
+trust_level = "trusted"
+
+[projects."/home/pablu/.config/nvim"]
+trust_level = "trusted"
+
+[projects."/home/pablu/projects/suchoi"]
+trust_level = "trusted"
+
+[projects."/home/pablu/projects/Logprep"]
+trust_level = "trusted"
+
+[projects."/home/pablu/.config/hypr"]
+trust_level = "trusted"
+
+[projects."/home/pablu/projects/qview"]
+trust_level = "trusted"
+
+[projects."/home/pablu/projects/tokonoma"]
+trust_level = "trusted"
+
+[projects."/home/pablu/projects/logprep-data-server"]
+trust_level = "trusted"
+
+[tui]
+theme = "catppuccin-mocha"
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "run-state", "permissions", "five-hour-limit"]
+status_line_use_colors = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
