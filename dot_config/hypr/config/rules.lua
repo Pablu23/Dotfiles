@@ -16,11 +16,11 @@ hl.window_rule({
 
 
 -- Workspaces to monitors
-for i = 1, 6 do
-  hl.workspace_rule({ workspace = tostring(i), monitor = MAIN_DISPLAY, persistent = true })
+for i = 1, 5 do
+  hl.workspace_rule({ workspace = tostring(i), monitor = MAIN_DISPLAY, persistent = true, default = i == 1 })
 end
 for i = 6, 10 do
-  hl.workspace_rule({ workspace = tostring(i), monitor = SECONDARY_DISPLAY, persistent = true })
+  hl.workspace_rule({ workspace = tostring(i), monitor = SECONDARY_DISPLAY, persistent = true, default = i == 6 })
 end
 
 
@@ -58,4 +58,18 @@ hl.window_rule({
   no_initial_focus = true,
   focus_on_activate = false,
   suppress_event = "active activatefocus"
+})
+
+hl.window_rule({
+  match = {
+    class = "gamescope"
+  },
+  immediate = true,
+  monitor = MAIN_DISPLAY,
+  content = "game",
+  decorate = false,
+  keep_aspect_ratio = false,
+  no_anim = true,
+  no_blur = true,
+  no_shadow = true,
 })

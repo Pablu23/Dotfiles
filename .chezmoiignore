@@ -1,5 +1,6 @@
 README.md
 {{- if ne .chezmoi.hostname "gentoo" }}
+.config/nvim/lua/hypr-nav.lua
 .wallpaper
 .config/dunst
 .config/fuzzel

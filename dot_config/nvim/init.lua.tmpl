@@ -40,29 +40,8 @@ end, { desc = "Pane split down" })
 
 -- Movement
 {{ if eq .chezmoi.hostname "gentoo" }}
-local function smart_move(direction, vim_cmd)
-  return function()
-    local before = vim.api.nvim_get_current_win()
 
-    vim.cmd("wincmd " .. vim_cmd)
-
-    if before == vim.api.nvim_get_current_win() then
-      vim.system({
-        "hyprctl",
-        "dispatch",
-        string.format(
-          "hl.dsp.focus({direction = '%s' })",
-          direction
-        )
-      })
-    end
-  end
-end
-
-vim.keymap.set({ 'n', 'i', 'v' }, '<D-h>', smart_move("left", "h"), { noremap = true, silent = false, desc = "Move to left windows" });
-vim.keymap.set({ 'n', 'i', 'v' }, '<D-l>', smart_move("right", "l"), { noremap = true, silent = false, desc = "Move to right windows" });
-vim.keymap.set({ 'n', 'i', 'v' }, '<D-j>', smart_move("down", "j"), { noremap = true, silent = false, desc = "Move to down window" });
-vim.keymap.set({ 'n', 'i', 'v' }, '<D-k>', smart_move("up", "k"), { noremap = true, silent = false, desc = "Move to up window" });
+require("hypr-nav")
 
 {{ end }}
 
@@ -284,4 +263,16 @@ for _, key in ipairs({
   "<S-Up>"
 }) do
   vim.keymap.set("n", key, "<Nop>")
+end
+
+for _, key in ipairs({
+  "<C-z>",
+  "<Up>",
+  "<Down>",
+  "<Left>",
+  "<Right>",
+  "<S-Down>",
+  "<S-Up>"
+}) do
+  vim.keymap.set("i", key, "<Nop>")
 end

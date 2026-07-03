@@ -3,7 +3,8 @@ hl.monitor({
   output = MAIN_DISPLAY,
   mode = "2560x1440@240",
   position = "auto",
-  scale = "auto"
+  scale = "auto",
+  vrr = 2,
 })
 
 hl.monitor({
@@ -11,7 +12,7 @@ hl.monitor({
   mode = "preferred",
   position = "auto-left",
   scale = "auto",
-  transform = 1
+  transform = 1,
 })
 
 -- backup monitor
@@ -60,9 +61,15 @@ hl.config({
   },
 
   cursor = {
-    no_hardware_cursors = 1,
-    no_warps = true,
-    hide_on_key_press = true
+    no_hardware_cursors = true,
+    -- no_warps = true,
+    hide_on_key_press = true,
+    inactive_timeout = 20,
+    default_monitor = MAIN_DISPLAY
+  },
+
+  render = {
+    direct_scanout = 2
   }
 })
 

@@ -14,34 +14,35 @@ hl.bind(mainMod .. " + S",
   hl.dsp.exec_cmd("grim -o" .. MAIN_DISPLAY .. " \"${HOME}/screenshots/screenshot-$(date +%F-%T).png\""))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
 
-local synth = {
-  left = false,
-  right = false,
-  up = false,
-  down = false,
-}
-
 local function smart_nav(direction)
   return function()
-    if synth[direction] then
-      return
-    end
-
     local win = hl.get_active_window()
 
-    if not win or win.class ~= "com.mitchellh.ghostty" or win.title ~= "vim" then
+    if not win
+        or win.class ~= "com.mitchellh.ghostty"
+        or not (
+          (win.title or ""):lower():find("^nvim")
+          or (win.title or ""):lower():find(" - nvim")
+          or (win.title or ""):lower():find("^vim")
+          or (win.title or ""):lower():find(" - vim"))
+    then
       hl.dispatch(hl.dsp.focus({ direction = direction }))
       return
     end
 
-    hl.dispatch(hl.dsp.pass({ window = "activewindow" }))
-    synth[direction] = true
-  end
-end
+    local runtime_dir = os.getenv("XDG_RUNTIME_DIR") or "/tmp"
+    local socket_path = string.format("%s/nvim-hypr-nav-%x.sock", runtime_dir, tostring(win.stable_id))
 
-local function smart_nav_release(direction)
-  return function()
-    synth[direction] = false
+    local handle = io.popen(
+      string.format("echo nav:%s | socat - UNIX-CONNECT:%s",
+        direction, socket_path))
+
+    local response = handle:read("*a")
+    handle:close()
+
+    if response:find("failed") then
+      hl.dispatch(hl.dsp.focus({ direction = direction }))
+    end
   end
 end
 
@@ -54,7 +55,6 @@ local movement_keys = {
 
 for key, dir in pairs(movement_keys) do
   hl.bind(mainMod .. " + " .. key, smart_nav(dir))
-  hl.bind(mainMod .. " + " .. key, smart_nav_release(dir), { release = true })
 end
 
 hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }))
