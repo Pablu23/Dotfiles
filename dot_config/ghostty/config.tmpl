@@ -15,6 +15,8 @@ background-blur=true
 
 shell-integration-features = ssh-terminfo,ssh-env
 
+link-url = true
+
 keybind = cmd+t=unbind
 keybind = cmd+n=unbind
 keybind = cmd+w=unbind
@@ -31,6 +33,7 @@ keybind = ctrl+v=paste_from_clipboard
 
 clipboard-paste-protection = false
 clipboard-paste-bracketed-safe = true
+clipboard-trim-trailing-spaces = true
 
 window-padding-x = 0
 window-padding-y = 0
@@ -44,3 +47,7 @@ shell-integration = zsh
 macos-option-as-alt = left
 macos-titlebar-style = transparent
 {{ end }}
+
+custom-shader-animation = true
+
+custom-shader = ./shaders/crisp_cursor_tail.glsl
