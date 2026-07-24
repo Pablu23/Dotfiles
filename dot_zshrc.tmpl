@@ -5,7 +5,17 @@ if [ "$TMUX" = "" ]; then tmux new-session -A -s default; fi
 {{ end }}
 
 autoload -Uz compinit
+
+{{ if eq .chezmoi.os "darwin" }}
+
+export COMPINIT_IGNORE_INSECURE=1
+compinit -u
+
+{{ else }}
+
 compinit
+
+{{ end }}
 
 setopt correctall
 
@@ -39,8 +49,11 @@ alias ls='eza --icons=always'
 path+=("/home/pablu/.cargo/bin")
 export PATH
 {{ else if eq .chezmoi.os "darwin" }}
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
+
 {{ else if eq .chezmoi.hostname "ubuntu" }}
 path+=("/home/ubuntu/nvim-linux-x86_64/bin")
 export PATH
@@ -59,7 +72,6 @@ source <(COMPLETE=zsh jj)
 
 {{ else if eq .chezmoi.os "darwin" }}
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source <(kubectl completion zsh)
 source <(kubebuilder completion zsh)
