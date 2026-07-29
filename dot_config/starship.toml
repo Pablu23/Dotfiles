@@ -2,6 +2,8 @@
 
 palette = "catppuccin_mocha"
 
+format = "$directory${custom.jj}$all"
+
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
@@ -34,3 +36,13 @@ crust = "#11111b"
 truncation_length = 0
 truncate_to_repo = false
 
+[custom.jj]
+when = "jj-starship detect"
+shell = ["jj-starship"]
+format = "$output "
+
+[git_branch]
+disabled = true
+
+[git_status]
+disabled = true

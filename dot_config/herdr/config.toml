@@ -1,0 +1,106 @@
+onboarding = false
+
+[terminal]
+# New panes inherit the focused pane's working directory.
+new_cwd = "follow"
+
+[ui]
+# Keep the project/workspace sidebar visible and useful.
+sidebar_width = 28
+sidebar_min_width = 20
+sidebar_max_width = 38
+
+# Visually distinguish Herdr panes without wasting much space.
+pane_borders = true
+pane_gaps = false
+
+# Hide the tab bar when a workspace only has one tab.
+hide_tab_bar_when_single_tab = true
+
+# Mouse support is useful on the Mac, particularly while learning Herdr.
+mouse_capture = true
+copy_on_select = true
+
+[keys]
+prefix = "ctrl+space"
+
+# Project switching.
+workspace_picker = "prefix+w"
+goto = "prefix+g"
+switch_workspace = "prefix+shift+1..9"
+previous_workspace = "prefix+shift+["
+next_workspace = "prefix+shift+]"
+
+# Quickly return to the previously focused pane, even across workspaces.
+last_pane = "prefix+backtick"
+
+# Tabs inside the current project.
+new_tab = "prefix+c"
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
+switch_tab = "prefix+1..9"
+
+# Pane operations.
+split_vertical = "prefix+/"
+split_horizontal = "prefix+minus"
+zoom = "prefix+z"
+close_pane = "prefix+x"
+
+# Keep prefixed navigation as an escape hatch.
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# Direct Ctrl+HJKL is handled by herdr-splits below.
+
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "herdr-splits.nav-left"
+description = "navigate left through Neovim and Herdr"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "herdr-splits.nav-down"
+description = "navigate down through Neovim and Herdr"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "herdr-splits.nav-up"
+description = "navigate up through Neovim and Herdr"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "herdr-splits.nav-right"
+description = "navigate right through Neovim and Herdr"
+
+[[keys.command]]
+key = "alt+h"
+type = "plugin_action"
+command = "herdr-splits.resize-left"
+description = "resize left"
+
+[[keys.command]]
+key = "alt+j"
+type = "plugin_action"
+command = "herdr-splits.resize-down"
+description = "resize down"
+
+[[keys.command]]
+key = "alt+k"
+type = "plugin_action"
+command = "herdr-splits.resize-up"
+description = "resize up"
+
+[[keys.command]]
+key = "alt+l"
+type = "plugin_action"
+command = "herdr-splits.resize-right"
+description = "resize right"
+
+[ui.toast]
+delivery = "herdr"
