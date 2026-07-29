@@ -1,3 +1,0 @@
-[submodule "deps/mini.test"]
-	path = deps/mini.test
-	url = https://github.com/nvim-mini/mini.test.git
