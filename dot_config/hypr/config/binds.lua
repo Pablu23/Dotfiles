@@ -14,35 +14,85 @@ hl.bind(mainMod .. " + S",
   hl.dsp.exec_cmd("grim -o" .. MAIN_DISPLAY .. " \"${HOME}/screenshots/screenshot-$(date +%F-%T).png\""))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
 
+local function focus_hyprland(direction)
+  hl.dispatch(hl.dsp.focus({ direction = direction }))
+end
+
+local function is_direct_nvim(title)
+  title = (title or ""):lower()
+
+  return title:find("^nvim")
+      or title:find(" - nvim", 1, true)
+      or title:find("^vim")
+      or title:find(" - vim", 1, true)
+end
+
+local function ask_direct_nvim(win, direction)
+  local runtime_dir = os.getenv("XDG_RUNTIME_DIR") or "/tmp"
+
+  local socket_path = string.format(
+    "%s/nvim-hypr-nav-%x.sock",
+    runtime_dir,
+    tostring(win.stable_id)
+  )
+
+  local handle = io.popen(string.format(
+    "printf 'nav:%s\\n' | socat -T 0.25 -,ignoreeof UNIX-CONNECT:%s 2>/dev/null",
+    direction,
+    socket_path
+  ))
+
+  if not handle then
+    return false
+  end
+
+  local response = handle:read("*a")
+  handle:close()
+
+  return response:find("success", 1, true) ~= nil
+end
+
 local function smart_nav(direction)
   return function()
     local win = hl.get_active_window()
 
-    if not win
-        or win.class ~= "com.mitchellh.ghostty"
-        or not (
-          (win.title or ""):lower():find("^nvim")
-          or (win.title or ""):lower():find(" - nvim")
-          or (win.title or ""):lower():find("^vim")
-          or (win.title or ""):lower():find(" - vim"))
-    then
-      hl.dispatch(hl.dsp.focus({ direction = direction }))
+    if not win then
       return
     end
 
-    local runtime_dir = os.getenv("XDG_RUNTIME_DIR") or "/tmp"
-    local socket_path = string.format("%s/nvim-hypr-nav-%x.sock", runtime_dir, tostring(win.stable_id))
-
-    local handle = io.popen(
-      string.format("echo nav:%s | socat - UNIX-CONNECT:%s",
-        direction, socket_path))
-
-    local response = handle:read("*a")
-    handle:close()
-
-    if response:find("failed") then
-      hl.dispatch(hl.dsp.focus({ direction = direction }))
+    if win.class ~= "com.mitchellh.ghostty" then
+      focus_hyprland(direction)
+      return
     end
+
+    local title = (win.title or ""):lower()
+
+    if title == "herdr" then
+      local helper = (os.getenv("HOME") or "")
+          .. "/.config/hypr/scripts/herdr-smart-nav"
+
+      local handle = io.popen(helper .. " " .. direction)
+
+      if not handle then
+        focus_hyprland(direction)
+        return
+      end
+
+      local result = handle:read("*a")
+      handle:close()
+
+      if result:find("hyprland", 1, true) then
+        focus_hyprland(direction)
+      end
+
+      return
+    end
+
+    if is_direct_nvim(title) and ask_direct_nvim(win, direction) then
+      return
+    end
+
+    focus_hyprland(direction)
   end
 end
 

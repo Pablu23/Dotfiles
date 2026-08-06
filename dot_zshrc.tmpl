@@ -46,6 +46,9 @@ alias cd='z'
 alias ls='eza --icons=always'
 
 {{ if eq .chezmoi.hostname "gentoo" }}
+
+eval "$(mise activate zsh)"
+
 path+=("/home/pablu/.cargo/bin")
 export PATH
 {{ else if eq .chezmoi.os "darwin" }}
@@ -63,12 +66,18 @@ source <(chezmoi completion zsh)
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
+{{ if ne .chezmoi.hostname "ubuntu" }}
+source <(herdr completion zsh)
+source <(COMPLETE=zsh jj)
+{{ end }}
+
 {{ if eq .chezmoi.hostname "gentoo" }}
 
 eval "$(direnv hook zsh)"
 source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
 source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
-source <(COMPLETE=zsh jj)
+source <(diple completion zsh)
+source <(zw completion zsh)
 
 {{ else if eq .chezmoi.os "darwin" }}
 
@@ -76,8 +85,6 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source <(kubectl completion zsh)
 source <(kubebuilder completion zsh)
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-source <(COMPLETE=zsh jj)
 
 {{ else if eq .chezmoi.hostname "ubuntu" }}
 

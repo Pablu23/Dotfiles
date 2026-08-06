@@ -6,17 +6,14 @@ return
   lazy = false,
   config = function()
     require("catppuccin").setup({
-      transparent_background = false,
+      transparent_background = true,
 
       custom_highlights = function(colors)
         return {
-          Normal = { bg = colors.base },
-          NormalNC = { bg = colors.mantle },
-
-          WinSeparator = { fg = colors.surface1, bg = colors.mantle },
+          WinSeparator = { fg = colors.surface1 },
 
           StatusLine = { fg = colors.text, bg = colors.surface0 },
-          StatusLineNC = { fg = colors.overlay0, bg = colors.mantle },
+          StatusLineNC = { fg = colors.overlay0 },
 
           CursorLine = { bg = colors.surface0 },
         }

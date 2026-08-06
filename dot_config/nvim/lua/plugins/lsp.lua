@@ -17,7 +17,8 @@ return {
       "templ",
       "nil_ls",
       "gleam",
-      "ty"
+      "ty",
+      "buf_ls"
     })
 
 

@@ -1,5 +1,8 @@
 onboarding = false
 
+[theme]
+name = "catppuccin"
+
 [terminal]
 # New panes inherit the focused pane's working directory.
 new_cwd = "follow"
@@ -12,7 +15,7 @@ sidebar_max_width = 38
 
 # Visually distinguish Herdr panes without wasting much space.
 pane_borders = true
-pane_gaps = false
+pane_gaps = true
 
 # Hide the tab bar when a workspace only has one tab.
 hide_tab_bar_when_single_tab = true
@@ -21,6 +24,8 @@ hide_tab_bar_when_single_tab = true
 mouse_capture = true
 copy_on_select = true
 
+show_agent_labels_on_pane_borders = false
+agent_panel_sort = "spaces"
 [keys]
 prefix = "ctrl+space"
 
@@ -54,53 +59,56 @@ focus_pane_right = "prefix+l"
 
 # Direct Ctrl+HJKL is handled by herdr-splits below.
 
-[[keys.command]]
-key = "ctrl+h"
-type = "plugin_action"
-command = "herdr-splits.nav-left"
-description = "navigate left through Neovim and Herdr"
-
-[[keys.command]]
-key = "ctrl+j"
-type = "plugin_action"
-command = "herdr-splits.nav-down"
-description = "navigate down through Neovim and Herdr"
-
-[[keys.command]]
-key = "ctrl+k"
-type = "plugin_action"
-command = "herdr-splits.nav-up"
-description = "navigate up through Neovim and Herdr"
-
-[[keys.command]]
-key = "ctrl+l"
-type = "plugin_action"
-command = "herdr-splits.nav-right"
-description = "navigate right through Neovim and Herdr"
-
-[[keys.command]]
-key = "alt+h"
-type = "plugin_action"
-command = "herdr-splits.resize-left"
-description = "resize left"
-
-[[keys.command]]
-key = "alt+j"
-type = "plugin_action"
-command = "herdr-splits.resize-down"
-description = "resize down"
-
-[[keys.command]]
-key = "alt+k"
-type = "plugin_action"
-command = "herdr-splits.resize-up"
-description = "resize up"
-
-[[keys.command]]
-key = "alt+l"
-type = "plugin_action"
-command = "herdr-splits.resize-right"
-description = "resize right"
+# [[keys.command]]
+# key = "ctrl+h"
+# type = "plugin_action"
+# command = "herdr-splits.nav-left"
+# description = "navigate left through Neovim and Herdr"
+#
+# [[keys.command]]
+# key = "ctrl+j"
+# type = "plugin_action"
+# command = "herdr-splits.nav-down"
+# description = "navigate down through Neovim and Herdr"
+#
+# [[keys.command]]
+# key = "ctrl+k"
+# type = "plugin_action"
+# command = "herdr-splits.nav-up"
+# description = "navigate up through Neovim and Herdr"
+#
+# [[keys.command]]
+# key = "ctrl+l"
+# type = "plugin_action"
+# command = "herdr-splits.nav-right"
+# description = "navigate right through Neovim and Herdr"
+#
+# [[keys.command]]
+# key = "alt+h"
+# type = "plugin_action"
+# command = "herdr-splits.resize-left"
+# description = "resize left"
+#
+# [[keys.command]]
+# key = "alt+j"
+# type = "plugin_action"
+# command = "herdr-splits.resize-down"
+# description = "resize down"
+#
+# [[keys.command]]
+# key = "alt+k"
+# type = "plugin_action"
+# command = "herdr-splits.resize-up"
+# description = "resize up"
+#
+# [[keys.command]]
+# key = "alt+l"
+# type = "plugin_action"
+# command = "herdr-splits.resize-right"
+# description = "resize right"
 
 [ui.toast]
 delivery = "herdr"
+
+[experimental]
+kitty_graphics = true
