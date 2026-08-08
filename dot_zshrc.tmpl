@@ -86,6 +86,8 @@ source <(kubectl completion zsh)
 source <(kubebuilder completion zsh)
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+alias brew='sudo -Hu zam /opt/homebrew/bin/brew'
+
 {{ else if eq .chezmoi.hostname "ubuntu" }}
 
 eval "$(direnv hook zsh)"
